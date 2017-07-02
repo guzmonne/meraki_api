@@ -4,4 +4,9 @@ init:
 test:
 	python -m unittest discover ./tests
 
-.PHONY: init test
+docs:
+	cd docs
+	make html
+	cd ..
+
+.PHONY: init test docs
