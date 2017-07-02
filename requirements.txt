@@ -1,0 +1,6 @@
+#
+####### Meraki SDK #######
+#
+###### Requirements without Version Specifiers ######
+requests
+#
