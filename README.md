@@ -1,2 +1,2 @@
-Meraki Dashboard Python SDK API
+Meraki Dashboard API python wrapper.
 ===
