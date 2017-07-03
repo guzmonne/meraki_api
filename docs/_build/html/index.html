@@ -58,25 +58,31 @@ more information about the API at its
 <p>To use this module you only have to import the <cite>MerakiAPI</cite> class, and
 instantiate a new instance of it, passing your profile access token. Then we can
 use its chainable api to call the different endpoints provided by the API.:</p>
-<blockquote>
-<div><p>from meraki_api import MerakiAPI</p>
-<p>KEY = “YOUR_PROFILE_AUTHORIZATION_KEY”</p>
-<p>meraki = MerakiAPI(KEY)</p>
-<p># Here is the code to get a list of all the organizations we have access to.
-response = meraki.organizations().index()</p>
-<p># It returns a <cite>requests</cite> response object. We can get its content by calling
-# <cite>.json()</cite> on it.
-organizations = response.json()</p>
-<p># To get just the information of a specific organization we must pass its id
-# when getting the organizations resource. Then we call <cite>show()</cite> on it to
-# get its current details.
-organization_key = “ORGANIZATION_KEY”
-organization_resource = meraki.organizations(organization_key)
-organization_details = organization_resource.show().json()</p>
-<p># We can also update the organization details using the previously defined
-# organization resource.
-organization_resource.update({“name”: “New organization name.”})</p>
-</div></blockquote>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">meraki_api</span> <span class="k">import</span> <span class="n">MerakiAPI</span>
+
+<span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;YOUR_PROFILE_AUTHORIZATION_KEY&quot;</span>
+
+<span class="n">meraki</span> <span class="o">=</span> <span class="n">MerakiAPI</span><span class="p">(</span><span class="n">KEY</span><span class="p">)</span>
+
+<span class="c1"># Here is the code to get a list of all the organizations we have access to.</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">meraki</span><span class="o">.</span><span class="n">organizations</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+
+<span class="c1"># It returns a `requests` response object. We can get its content by calling</span>
+<span class="c1"># `.json()` on it.</span>
+<span class="n">organizations</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="c1"># To get just the information of a specific organization we must pass its id</span>
+<span class="c1"># when getting the organizations resource. Then we call `show()` on it to</span>
+<span class="c1"># get its current details.</span>
+<span class="n">organization_key</span> <span class="o">=</span> <span class="s2">&quot;ORGANIZATION_KEY&quot;</span>
+<span class="n">organization_resource</span> <span class="o">=</span> <span class="n">meraki</span><span class="o">.</span><span class="n">organizations</span><span class="p">(</span><span class="n">organization_key</span><span class="p">)</span>
+<span class="n">organization_details</span> <span class="o">=</span> <span class="n">organization_resource</span><span class="o">.</span><span class="n">show</span><span class="p">()</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="c1"># We can also update the organization details using the previously defined</span>
+<span class="c1"># organization resource.</span>
+<span class="n">organization_resource</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;New organization name.&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">You need the <cite>requests</cite> module in order for this API to work. Actually, this
