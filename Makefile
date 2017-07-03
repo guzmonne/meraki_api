@@ -26,4 +26,4 @@ docs:
 	git push origin gh-pages --force
 	git checkout master
 
-.PHONY: init test docs
+.PHONY: init test docs html
