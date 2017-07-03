@@ -8,6 +8,7 @@ html:
 	cd docs && make html && cd ..
 
 docs:
+	make html
 	git add --all
 	git commit -m "updated docs"
 	git branch -D gh-pages
