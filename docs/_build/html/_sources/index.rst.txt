@@ -27,7 +27,7 @@ MerakiAPI usage example
 
 To use this module you only have to import the `MerakiAPI` class, and 
 instantiate a new instance of it, passing your profile access token. Then we can
-use its chainable api to call the different endpoints provided by the API.
+use its chainable api to call the different endpoints provided by the API.:
 
     from meraki_api import MerakiAPI
 
