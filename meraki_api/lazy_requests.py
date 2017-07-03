@@ -10,7 +10,10 @@ import requests
 
 class LazyRequests():
     """
-    Allow to call requests lazily.
+    Allow to call requests lazily. When called you should provide all the
+    necessary parameters to call make the request. By default the *header* and
+    the *url* are mandatory. The *data* parameter is optional, and should only
+    be provided if we want to call a `put` or `post` request.
     """
 
     cached = None
