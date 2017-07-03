@@ -15,7 +15,10 @@ class MerakiAPIResource:
     is_lazy = False
 
     def __init__(self, key, prefix=None, resource_id=None):
-        self.resource_id = str(resource_id)
+        if resource_id is not None:
+            self.resource_id = str(resource_id)
+        else:
+            self.resource_id = None
         self.key = key
         self.prefix = prefix
 
