@@ -20,8 +20,7 @@ class MerakiAPI(MerakiAPIResource):
         meraki = MerakiAPI(KEY)
 
     The networks, organizations, and devices endpoints all work in a similar
-    manner. They all inherit from ::autoclass:`~meraki_api.meraki_api_resource` 
-    ,
+    manner. They all inherit from ::class:`~meraki_api.meraki_api_resource` ,
     so they have all the command REST actions: `index`, `create`, `show`,
     `update`, and `delete`. Some of them have other special functions to
     execute more specific actions. They also reference other endpoint
