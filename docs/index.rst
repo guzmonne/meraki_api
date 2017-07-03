@@ -65,6 +65,7 @@ Contents
     :maxdepth: 2
 
     meraki_api
+    meraki_api_resource
     faq
 
 Indices and tables

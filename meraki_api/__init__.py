@@ -57,3 +57,4 @@ from .__version__ import __copyright__
 
 from .meraki_api import MerakiAPI
 from .lazy_requests import LazyRequests
+from .meraki_api_resource import MerakiAPIResource

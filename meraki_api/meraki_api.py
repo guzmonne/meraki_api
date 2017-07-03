@@ -9,9 +9,7 @@ from .networks import Networks
 
 class MerakiAPI(MerakiAPIResource):
     """
-    This class is the root of all the API Resources. You must instantiate a new
-    object from this class, setting you profile authentication token to access
-    the API.::
+    You must instantiate a new object from this class, setting you profile authentication token to access the API.::
 
         from meraki_api import MerakiAPI
 
