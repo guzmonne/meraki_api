@@ -7,3 +7,6 @@ of this class.
 
 .. autoclass:: meraki_api.MerakiAPI
    :members:
+
+.. autoclass:: meraki_api.Admins
+   :members:
