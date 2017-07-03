@@ -5,18 +5,19 @@ Meraki API Setup module.
 from os import path
 from codecs import open as codecs_open
 from setuptools import setup, find_packages
+from meraki_api import __version__
 
 HERE = path.abspath(path.dirname(__file__))
 
 # Get the long description from the README file
-with codecs_open(path.join(HERE, 'README.md'), encoding='utf-8') as f:
+with codecs_open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
     name='meraki_api',
-    version='0.0.1',
+    version=__version__,
     description='Meraki Dashboard API wrapper.',
-    logn_description=LONG_DESCRIPTION,
+    long_description=LONG_DESCRIPTION,
     url='https://github.com/guzmonne/meraki_api',
     # Author details
     author='Guzmán Monné',
@@ -39,6 +40,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
     ],
+    # Github archive
+    download_url=(
+        "https://github.com/guzmonne/meraki_api/archive/"
+        + __version__
+        + ".tar.gz"
+    ),
     # What does your project relate to?
     keywords='api development',
     # You can just specify the packages manually here if your project is
