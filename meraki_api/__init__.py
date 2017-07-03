@@ -58,3 +58,17 @@ from .__version__ import __copyright__
 from .meraki_api import MerakiAPI
 from .lazy_requests import LazyRequests
 from .meraki_api_resource import MerakiAPIResource
+from .admins import Admins
+from .config_templates import ConfigTemplates
+from .devices import Devices
+from .l3_firewall_rules import L3FirewallRules
+from .networks import Networks
+from .organizations import Organizations
+from .phone_contacts import PhoneContacts
+from .saml_roles import SAMLRoles
+from .site_to_site_vpn import SiteToSiteVPN
+from .sm import SM
+from .ssids import SSIDs
+from .static_routes import StaticRoutes
+from .switch_ports import SwitchPorts
+from .vlans import VLANs
