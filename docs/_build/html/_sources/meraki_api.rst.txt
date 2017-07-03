@@ -6,3 +6,4 @@ stands as the root of the api. All further actions are called from an instance
 of this class.
 
 .. autoclass:: meraki_api.MerakiAPI
+   :members:
