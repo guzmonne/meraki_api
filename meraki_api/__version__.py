@@ -6,7 +6,7 @@ Meraki Dashboard API
 __title__ = 'meraki_api'
 __description__ = 'Meraki Dashboard API wrapper.'
 __url__ = 'https://github.com/guzmonne/meraki-api'
-__version__ = '0.0.1'
+__version__ = '1.0.0'
 __author__ = 'Guzmán Monné'
 __author_email__ = 'guzmonne@hotmail.com'
 __license__ = 'MIT'

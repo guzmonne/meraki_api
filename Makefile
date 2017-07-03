@@ -7,6 +7,15 @@ test:
 html:
 	cd docs && make html && cd ..
 
+build:
+	rm -rf build dist
+	python setup.py sdist
+	python setup.py bdist_wheel
+
+deploy:
+	twine upload dist/*
+	make docs
+
 docs:
 	make html
 	git add --all
@@ -26,4 +35,4 @@ docs:
 	git push origin gh-pages --force
 	git checkout master
 
-.PHONY: init test docs html
+.PHONY: init test docs html build deploy
