@@ -24,7 +24,7 @@ class MerakiAPI(MerakiAPIResource):
     manner. They all inherit from ::module: meraki_api_resource , so they have
     all the command REST actions: `index`, `create`, `show`, `update`, and
     `delete`. Some of them have other special functions to execute more specific
-    actions. They also reference other endpoint creators.
+    actions. They also reference other endpoint creators.::
 
         # All organizations.
         organizations = meraki.organizations()

@@ -4,6 +4,9 @@ init:
 test:
 	python -m unittest discover ./tests
 
+html:
+	cd docs && make html && cd ..
+
 docs:
 	git add --all
 	git commit -m "updated docs"
