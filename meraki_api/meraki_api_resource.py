@@ -15,7 +15,7 @@ class MerakiAPIResource:
     is_lazy = False
 
     def __init__(self, key, prefix=None, resource_id=None):
-        self.set_resource_id(resource_id)
+        self.resource_id = resource_id
         self.key = key
         self.prefix = prefix
 
@@ -35,11 +35,11 @@ class MerakiAPIResource:
         """ Builds the endpoint. """
         endpoint = ""
         if self.prefix is not None:
-            endpoint += self.prefix
+            endpoint += str(self.prefix)
         if self.resource is not None:
-            endpoint += "/" + self.resource
+            endpoint += "/" + str(self.resource)
         if self.resource_id is not None:
-            endpoint += "/" + self.resource_id
+            endpoint += "/" + str(self.resource_id)
         return endpoint
 
     def lazy(self):
@@ -70,7 +70,7 @@ class MerakiAPIResource:
 
     def __build_url(self):
         """ Builds the url. """
-        url = self.url + self.endpoint()
+        url = self.url + str(self.endpoint())
         return url
 
     def set_resource_id(self, resource_id):

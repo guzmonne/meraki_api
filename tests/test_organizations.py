@@ -2,12 +2,12 @@
 Meraki API Testing module.
 """
 
-KEY = "SOME_KEY"
-ORGANIZATION_ID = "ORGANIZATION_ID"
-
 import unittest
 # The context.py file on this folder sets up the context for the test case.
 from context import MerakiAPI
+
+KEY = "SOME_KEY"
+ORGANIZATION_ID = 1234
 
 class TestMerakiApi(unittest.TestCase):
     """ Meraki API test case. """
@@ -23,7 +23,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.show enpoint. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             , MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
             .lazy()
@@ -48,7 +48,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.update enpoint. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             , MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
             .lazy()
@@ -61,7 +61,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.delete enpoint. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             , MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
             .lazy()
@@ -74,7 +74,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.clone endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/clone",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -87,7 +87,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.claim endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/claim",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -100,7 +100,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.licenseState endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/licenseState",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -113,7 +113,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.inventory endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/inventory",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -126,7 +126,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.snmp endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/snmp",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -139,7 +139,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.thirdPartyVPNPeers endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/thirdPartyVPNPeers",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
@@ -152,7 +152,7 @@ class TestMerakiApi(unittest.TestCase):
         """ The organizations.thirdPartyVPNPeers endpoint should be correct. """
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
-            + ORGANIZATION_ID
+            + str(ORGANIZATION_ID)
             + "/thirdPartyVPNPeers",
             MerakiAPI(KEY)
             .organizations(ORGANIZATION_ID)
