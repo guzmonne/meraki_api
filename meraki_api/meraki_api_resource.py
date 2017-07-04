@@ -15,7 +15,7 @@ class MerakiAPIResource:
     is_lazy = False
 
     def __init__(self, key, prefix=None, resource_id=None):
-        self.resource_id = self.set_resource_id(resource_id)
+        self.set_resource_id(resource_id)
         self.key = key
         self.prefix = prefix
 
@@ -53,6 +53,7 @@ class MerakiAPIResource:
             self.resource_id = str(resource_id)
         else:
             self.resource_id = None
+        return self
 
     def use(self, resource_id):
         """

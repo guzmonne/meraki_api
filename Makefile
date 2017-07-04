@@ -6,6 +6,7 @@ test:
 
 html:
 	cd docs && make html && cd ..
+	python <<< 'from meraki_api import __version__;print(__version__)' >> __version__
 
 build:
 	rm -rf build dist
