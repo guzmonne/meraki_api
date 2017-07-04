@@ -15,10 +15,7 @@ class MerakiAPIResource:
     is_lazy = False
 
     def __init__(self, key, prefix=None, resource_id=None):
-        if resource_id is not None:
-            self.resource_id = str(resource_id)
-        else:
-            self.resource_id = None
+        self.resource_id = self.set_resource_id(resource_id)
         self.key = key
         self.prefix = prefix
 
@@ -49,6 +46,21 @@ class MerakiAPIResource:
         """ Turns the class lazy. """
         self.is_lazy = True
         return self
+
+    def set_resource_id(self, resource_id=None):
+        """ Sets the resource_id value. """
+        if resource_id is not None:
+            self.resource_id = str(resource_id)
+        else:
+            self.resource_id = None
+
+    def use(self, resource_id):
+        """
+        Alias to set_resource_id for better chaining.
+        The only difference with this function is that the
+        `resource_id` parameter is now required.
+        """
+        return self.set_resource_id(resource_id)
 
     def dynamic(self):
         """ Makes the class dynamic (not lazy). """
@@ -83,7 +95,7 @@ class MerakiAPIResource:
 
     def request(self, method, suffix=None, data=None):
         """ Dynamically create and call LazyRequest methods. """
-        url = self.__build_url() + (suffix if suffix is not None else "")
+        url = self.__build_url() + (str(suffix) if suffix is not None else "")
         headers = self.__headers()
         if data is not None:
             data = json.dumps(data)
