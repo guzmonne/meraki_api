@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Meraki API Setup module.
 """
