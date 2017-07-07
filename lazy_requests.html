@@ -1,0 +1,165 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>LazyRequests &#8212; MerakiAPI 1.1.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="License" href="faq.html" />
+    <link rel="prev" title="MerakiAPIResource" href="meraki_api_resource.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lazyrequests">
+<h1>LazyRequests<a class="headerlink" href="#lazyrequests" title="Permalink to this headline">¶</a></h1>
+<p>This class provides a set of functions to interact with the <cite>requests</cite> library.
+It can <em>cache</em> a <cite>requests</cite> invocation for latter use, or call it immediately.
+This behaviour allows to check the the url of the request before calling it or
+to instantiate requests to call them in parallel later.</p>
+<dl class="class">
+<dt id="meraki_api.LazyRequests">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">LazyRequests</code><span class="sig-paren">(</span><em>url</em>, <em>headers</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow to call requests lazily. When called you should provide all the
+necessary parameters to call make the request. By default the <em>header</em> and
+the <em>url</em> are mandatory. The <em>data</em> parameter is optional, and should only
+be provided if we want to call a <cite>put</cite> or <cite>post</cite> request.</p>
+<dl class="method">
+<dt id="meraki_api.LazyRequests.cache">
+<code class="descname">cache</code><span class="sig-paren">(</span><em>method</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caches a function that calls a requests method with the saved params.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.LazyRequests.call">
+<code class="descname">call</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Invokes the cached function or throws an error.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.LazyRequests.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caches a function that calls requests.delete with current parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.LazyRequests.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caches a function that calls requests.get with current parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.LazyRequests.post">
+<code class="descname">post</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caches a function that calls requests.post with current parameters.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.LazyRequests.put">
+<code class="descname">put</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.LazyRequests.put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Caches a function that calls requests.put with current parameters.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MerakiAPI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="meraki_api.html">MerakiAPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meraki_api_resource.html">MerakiAPIResource</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LazyRequests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/guzmonne/meraki_api">סּ_סּ Github</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="meraki_api_resource.html" title="previous chapter">MerakiAPIResource</a></li>
+      <li>Next: <a href="faq.html" title="next chapter">License</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Guzman Monne.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/lazy_requests.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

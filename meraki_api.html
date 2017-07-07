@@ -1,0 +1,506 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MerakiAPI &#8212; MerakiAPI 1.1.3 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MerakiAPIResource" href="meraki_api_resource.html" />
+    <link rel="prev" title="Welcome to MerakiAPI’s documentation!" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="merakiapi">
+<h1>MerakiAPI<a class="headerlink" href="#merakiapi" title="Permalink to this headline">¶</a></h1>
+<p>This is the main class that should be called to initialize the module, since it
+stands as the root of the api. All further actions are called from an instance
+of this class.</p>
+<dl class="class">
+<dt id="meraki_api.MerakiAPI">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">MerakiAPI</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.MerakiAPI" title="Permalink to this definition">¶</a></dt>
+<dd><p>You must instantiate a new object from this class, setting you profile 
+authentication token to access the API.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">meraki_api</span> <span class="k">import</span> <span class="n">MerakiAPI</span>
+
+<span class="c1"># Meraki Dashboard API profile authentication token.</span>
+<span class="n">KEY</span> <span class="o">=</span> <span class="s2">&quot;MY_AUTHENTICATION_KEY&quot;</span>
+<span class="c1"># API root.</span>
+<span class="n">meraki</span> <span class="o">=</span> <span class="n">MerakiAPI</span><span class="p">(</span><span class="n">KEY</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The networks, organizations, and devices endpoints all work in a similar
+manner. They all inherit from :<code class="xref py py-class docutils literal"><span class="pre">meraki_api_resource</span></code> ,
+so they have all the command REST actions: <cite>index</cite>, <cite>create</cite>, <cite>show</cite>,
+<cite>update</cite>, and <cite>delete</cite>. Some of them have other special functions to
+execute more specific actions. They also reference other endpoint
+creators.:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># All organizations.</span>
+<span class="n">organizations</span> <span class="o">=</span> <span class="n">meraki</span><span class="o">.</span><span class="n">organizations</span><span class="p">()</span>
+<span class="c1"># List.</span>
+<span class="n">organizations</span><span class="o">.</span><span class="n">index</span><span class="p">()</span>
+<span class="c1"># Create new organization.</span>
+<span class="n">organizations</span><span class="o">.</span><span class="n">create</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;New organization&quot;</span><span class="p">})</span>
+
+<span class="c1"># To access an individual organization we must pass its ID.</span>
+<span class="n">ORGANIZATION_ID</span> <span class="o">=</span> <span class="s2">&quot;MY_ORGANIZATION_ID&quot;</span>
+<span class="n">organization</span> <span class="o">=</span> <span class="n">meraki</span><span class="o">.</span><span class="n">organizations</span><span class="p">(</span><span class="n">ORGANIZATION_ID</span><span class="p">)</span>
+<span class="c1"># Organization details.</span>
+<span class="n">organization</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1"># Update organization.</span>
+<span class="n">organization</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Updated organization name&quot;</span><span class="p">})</span>
+<span class="c1"># Delete organization.</span>
+<span class="n">organization</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>We would use the same action to interact with the <cite>networks</cite> or <cite>devices</cite>
+endpoints</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Each <cite>index</cite>, <cite>create</cite>, <cite>show</cite>, <cite>update</cite>, and <cite>delete</cite> function, returns a
+<cite>requests</cite> response object. If you just want the body we should run
+<cite>response.json()</cite> to get it.</p>
+</div>
+<dl class="method">
+<dt id="meraki_api.MerakiAPI.devices">
+<code class="descname">devices</code><span class="sig-paren">(</span><em>serial=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.MerakiAPI.devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the API Devices Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.MerakiAPI.networks">
+<code class="descname">networks</code><span class="sig-paren">(</span><em>network_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.MerakiAPI.networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the API Networks Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.MerakiAPI.organizations">
+<code class="descname">organizations</code><span class="sig-paren">(</span><em>organization_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.MerakiAPI.organizations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the API Organizations Resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.Organizations">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">Organizations</code><span class="sig-paren">(</span><em>key</em>, <em>prefix=None</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organizations resource.</p>
+<dl class="method">
+<dt id="meraki_api.Organizations.admins">
+<code class="descname">admins</code><span class="sig-paren">(</span><em>admin_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.admins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Organization Admins API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.claim">
+<code class="descname">claim</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.claim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Claim order, license key, or order into an organization.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.clone">
+<code class="descname">clone</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new organization by cloning.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.config_templates">
+<code class="descname">config_templates</code><span class="sig-paren">(</span><em>config_template_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.config_templates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Organization Config Templates API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.inventory">
+<code class="descname">inventory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.inventory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the license state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.license_state">
+<code class="descname">license_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.license_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the license state.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.networks">
+<code class="descname">networks</code><span class="sig-paren">(</span><em>network_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Organization Networks API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.saml_roles">
+<code class="descname">saml_roles</code><span class="sig-paren">(</span><em>saml_role_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.saml_roles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Organization SAML Roles API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.snmp">
+<code class="descname">snmp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.snmp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the SNMP settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.third_party_vpn_peers">
+<code class="descname">third_party_vpn_peers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.third_party_vpn_peers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the third party VPN peers.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Organizations.update_third_party_vpn_peers">
+<code class="descname">update_third_party_vpn_peers</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Organizations.update_third_party_vpn_peers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the third party VPN peers.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.Networks">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">Networks</code><span class="sig-paren">(</span><em>key</em>, <em>prefix=None</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Networks resource.</p>
+<dl class="method">
+<dt id="meraki_api.Networks.access_policies">
+<code class="descname">access_policies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.access_policies" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the access policies (MS).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.air_marshal">
+<code class="descname">air_marshal</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.air_marshal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Air marshal scan results from a network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.available_phone_numbers">
+<code class="descname">available_phone_numbers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.available_phone_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all the available phone numbers in a network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.bind">
+<code class="descname">bind</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binds template to network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.check_timespan">
+<code class="descname">check_timespan</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.check_timespan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the query object has the timespan value configured.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.devices">
+<code class="descname">devices</code><span class="sig-paren">(</span><em>serial=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Networks Devices API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.phone_contacts">
+<code class="descname">phone_contacts</code><span class="sig-paren">(</span><em>phone_contact_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.phone_contacts" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the phone contacts in a network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.phone_numbers">
+<code class="descname">phone_numbers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.phone_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all the phone numbers in a network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.site_to_site_vpn">
+<code class="descname">site_to_site_vpn</code><span class="sig-paren">(</span><em>site_to_site_vpn_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.site_to_site_vpn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns site-to-site VPN settings API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.sm">
+<code class="descname">sm</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.sm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Network SM API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.ssids">
+<code class="descname">ssids</code><span class="sig-paren">(</span><em>ssid_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.ssids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Network SSIDs API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.static_routes">
+<code class="descname">static_routes</code><span class="sig-paren">(</span><em>static_route_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.static_routes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Networks Static Routes API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.traffic">
+<code class="descname">traffic</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.traffic" title="Permalink to this definition">¶</a></dt>
+<dd><p>The traffic analysis data for this network. Traffic Analysis with
+Hostname Visibility must be enabled on the network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.unbind">
+<code class="descname">unbind</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.unbind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unbind template from network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Networks.vlans">
+<code class="descname">vlans</code><span class="sig-paren">(</span><em>vlan_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Networks.vlans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns VLANs VPN settings API Resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.Devices">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">Devices</code><span class="sig-paren">(</span><em>key</em>, <em>prefix=None</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Devices resource.</p>
+<dl class="method">
+<dt id="meraki_api.Devices.claim">
+<code class="descname">claim</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices.claim" title="Permalink to this definition">¶</a></dt>
+<dd><p>Claim a device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Devices.clients">
+<code class="descname">clients</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices.clients" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the clients of a device, up to a maximum of a month ago. The
+usage of each client is returned in kilobytes. If the device is a
+switch, the switchport is returned; otherwise the switchport field
+is null.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Devices.remove">
+<code class="descname">remove</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a single device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Devices.switch_ports">
+<code class="descname">switch_ports</code><span class="sig-paren">(</span><em>switch_port_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices.switch_ports" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Device Switch Ports API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.Devices.uplink">
+<code class="descname">uplink</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Devices.uplink" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return uplink status.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.Admins">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">Admins</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.Admins" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organization Admins resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.ConfigTemplates">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">ConfigTemplates</code><span class="sig-paren">(</span><em>key</em>, <em>prefix=None</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.ConfigTemplates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki Config Templates API Resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.L3FirewallRules">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">L3FirewallRules</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.L3FirewallRules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API L3 Firewall Rules resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.PhoneContacts">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">PhoneContacts</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.PhoneContacts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Phone Contacts resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.SAMLRoles">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">SAMLRoles</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SAMLRoles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organization SAML Roles resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.SiteToSiteVPN">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">SiteToSiteVPN</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SiteToSiteVPN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organization Admins resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.SM">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">SM</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Network SM resource.</p>
+<dl class="method">
+<dt id="meraki_api.SM.check_in">
+<code class="descname">check_in</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.check_in" title="Permalink to this definition">¶</a></dt>
+<dd><p>Force check-in a set of devices.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.devices">
+<code class="descname">devices</code><span class="sig-paren">(</span><em>query=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the Networks SM Devices API Resource.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.lock_devices">
+<code class="descname">lock_devices</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.lock_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lock a set of devices.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.modify_device_fields">
+<code class="descname">modify_device_fields</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.modify_device_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the fields of a device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.modify_devices_tags">
+<code class="descname">modify_devices_tags</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.modify_devices_tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add, delete, or update the tags of a set of devices.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.move_devices">
+<code class="descname">move_devices</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.move_devices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move a set of devices to a new network.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="meraki_api.SM.wipe_device">
+<code class="descname">wipe_device</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SM.wipe_device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wipe a device.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.SSIDs">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">SSIDs</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SSIDs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organization Admins resource.</p>
+<dl class="method">
+<dt id="meraki_api.SSIDs.l3_firewall_rules">
+<code class="descname">l3_firewall_rules</code><span class="sig-paren">(</span><em>l3_firewall_rule_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SSIDs.l3_firewall_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the L3 Firewall Rules API Resource.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.StaticRoutes">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">StaticRoutes</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.StaticRoutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Network Staic Routes resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.SwitchPorts">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">SwitchPorts</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.SwitchPorts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Devices SwitchPorts resource.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="meraki_api.VLANs">
+<em class="property">class </em><code class="descclassname">meraki_api.</code><code class="descname">VLANs</code><span class="sig-paren">(</span><em>key</em>, <em>prefix</em>, <em>resource_id=None</em><span class="sig-paren">)</span><a class="headerlink" href="#meraki_api.VLANs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Meraki API Organization VLANs resource.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">MerakiAPI</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MerakiAPI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="meraki_api_resource.html">MerakiAPIResource</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lazy_requests.html">LazyRequests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">License</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="https://github.com/guzmonne/meraki_api">סּ_סּ Github</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to MerakiAPI’s documentation!</a></li>
+      <li>Next: <a href="meraki_api_resource.html" title="next chapter">MerakiAPIResource</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Guzman Monne.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/meraki_api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
