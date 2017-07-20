@@ -8,7 +8,7 @@ the request lazily.
 
 First, we can bootstrap the module by indicating our API Key.
 
-  >>> import MerakiAPI
+  >>> from meraki_api import MerakiAPI
   >>> KEY = <Your user Meraki API KEY>
   >>> meraki = MerakiAPI(KEY)
 
