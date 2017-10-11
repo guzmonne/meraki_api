@@ -2,7 +2,6 @@
 Meraki Networks API Resource
 """
 
-import urllib
 from .meraki_api_resource import MerakiAPIResource
 from .devices import Devices
 from .ssids import SSIDs
@@ -73,7 +72,7 @@ class Networks(MerakiAPIResource):
         self.check_for_resource_id()
         self.check_timespan(query)
         query = clean(query, self.traffic_parameters)
-        return self.get("/traffic?" + urllib.parse.urlencode(query))
+        return self.get("/traffic", query)
 
     def bind(self, data):
         """ Binds template to network. """
@@ -96,7 +95,7 @@ class Networks(MerakiAPIResource):
         self.check_timespan(query)
         self.check_for_resource_id()
         query = clean(query, self.air_marshal_parameters)
-        return self.get("/airMarshal?" + urllib.parse.urlencode(query))
+        return self.get("/airMarshal", query)
 
     def phone_contacts(self, phone_contact_id=None):
         """ List the phone contacts in a network. """

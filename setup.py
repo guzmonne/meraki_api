@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Meraki API Setup module.
 """
@@ -12,6 +13,13 @@ HERE = path.abspath(path.dirname(__file__))
 # Get the long description from the README file
 with codecs_open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
+
+# unittests
+import unittest
+def meraki_api_test_suite():
+    test_loader = unittest.TestLoader()
+    test_suite = test_loader.discover('tests', pattern='test_*.py')
+    return test_suite
 
 setup(
     name='meraki_api',
@@ -37,6 +45,8 @@ setup(
         'License :: OSI Approved :: MIT License',
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
     ],
@@ -52,6 +62,7 @@ setup(
     # simple. Or you can use find_packages().
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=['requests'],
+    test_suite='setup.meraki_api_test_suite',
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
     # for example:

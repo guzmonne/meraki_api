@@ -2,7 +2,6 @@
 Meraki SM API Resource
 """
 
-import urllib
 from .meraki_api_resource import MerakiAPIResource
 from .utils import clean
 
@@ -74,10 +73,7 @@ class SM(MerakiAPIResource):
         """ Returns the Networks SM Devices API Resource. """
         if query is not None:
             query = clean(query, self.devices_parameters)
-            query = "?" + urllib.parse.urlencode(query)
-        else:
-            query = ""
-        return self.get("/devices" + query)
+        return self.get("/devices", query)
 
     def modify_devices_tags(self, data):
         """ Add, delete, or update the tags of a set of devices. """
