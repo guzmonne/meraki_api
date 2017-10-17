@@ -29,9 +29,11 @@ class LazyRequests():
         """
         def func():
             """ Function wrapper to lazily invoke requests.get. """
-            data = self.data if method == 'post' or 'put' else None
-            request_method = getattr(requests, method, None)
-            return request_method(self.url, headers=self.headers, data=data)
+            if method == 'get':
+                return requests.get(self.url, headers=self.headers, params=self.data)
+            else:
+                request_method = getattr(requests, method, None)
+                return request_method(self.url, headers=self.headers, data=self.data)
         self.cached = func
         return self
 

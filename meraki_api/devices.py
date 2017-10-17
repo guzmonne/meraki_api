@@ -2,7 +2,6 @@
 Meraki Devices API Resource
 """
 
-import urllib
 from .meraki_api_resource import MerakiAPIResource
 from .switch_ports import SwitchPorts
 from .utils import clean
@@ -36,7 +35,7 @@ class Devices(MerakiAPIResource):
         if query is None:
             raise ValueError("You must set the timespan query value.")
         query = clean(query, self.clients_parameters)
-        return self.get("/clients?" + urllib.parse.urlencode(query))
+        return self.get("/clients", query)
 
     def uplink(self):
         """ Return uplink status. """

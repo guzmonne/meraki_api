@@ -93,23 +93,27 @@ class TestMerakiApi(unittest.TestCase):
 
     def test_organization_networks_traffic(self):
         """ The organizations.networks.traffic endpoint should be correct. """
+        req = MerakiAPI(KEY).organizations(ORGANIZATION_ID).networks(NETWORK_ID).lazy().traffic({
+                "timespan": 7200,
+                "deviceType": "wireless"
+            })
+
         self.assertEqual(
             "https://dashboard.meraki.com/api/v0/organizations/"
             + ORGANIZATION_ID
             + "/networks/"
             + NETWORK_ID
-            + "/traffic?timespan=7200&deviceType=wireless"
-            , MerakiAPI(KEY)
-            .organizations(ORGANIZATION_ID)
-            .networks(NETWORK_ID)
-            .lazy()
-            .traffic({
-                "timespan": 7200,
-                "deviceType": "wireless"
-            })
+            + "/traffic"
+            , req
             .cached
             .url
         )
+        self.assertEqual(
+            {'deviceType': 'wireless', 'timespan': 7200}
+            , req
+            .cached
+            .data
+)
 
 if __name__ == '__main__':
     unittest.main()
