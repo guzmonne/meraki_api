@@ -10,6 +10,7 @@ from .phone_contacts import PhoneContacts
 from .sm import SM
 from .static_routes import StaticRoutes
 from .vlans import VLANs
+from .l3_firewall_rules import L3FirewallRules
 from .utils import clean
 
 
@@ -111,3 +112,9 @@ class Networks(MerakiAPIResource):
         """ List all the available phone numbers in a network. """
         self.check_for_resource_id()
         return self.get("/phoneNumbers/available")
+
+    def l3_firewall_rules(self, l3_firewall_rule_id=None):
+        """ List the L3 firewall rules for an MX network. """
+        self.check_for_resource_id()
+        return L3FirewallRules(self.key, self.endpoint(), l3_firewall_rule_id)
+
