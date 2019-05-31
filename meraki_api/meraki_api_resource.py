@@ -98,7 +98,7 @@ class MerakiAPIResource:
         """ Dynamically create and call LazyRequest methods. """
         url = self.__build_url() + (str(suffix) if suffix is not None else "")
         headers = self.__headers()
-        if data is not None and method != "get":
+        if data is not None:
             data = json.dumps(data)
         func = getattr(LazyRequests(url, headers, data), method, None)
         if func is None:
@@ -106,11 +106,11 @@ class MerakiAPIResource:
         self.cached = func()
         return self if self.is_lazy is True else self.cached.call()
 
-    def get(self, suffix=None, data=None):
+    def get(self, suffix=None):
         """
         Returns a class that can call a ger request to a built URL lazily.
         """
-        return self.request("get", suffix, data=data)
+        return self.request("get", suffix)
 
     def post(self, suffix=None, data=None):
         """
