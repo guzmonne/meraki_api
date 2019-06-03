@@ -8,7 +8,12 @@ ADMIN_ID = "ADMIN_ID"
 
 import sys
 import unittest
-from unittest import mock
+try:
+    from unittest import mock
+except ImportError:
+    # backup for python2
+    import mock
+
 # The context.py file on this folder sets up the context for the test case.
 from context import LazyRequests, build_mocked_requests_decorator
 
@@ -49,14 +54,15 @@ class TestMerakiApi(unittest.TestCase):
         # Run for each method
         map(test_check, self.methods)
 
-    def check_test_call(self, result, mocked):
+    def check_test_call(self, result, mocked, expected_args={}):
         """ Helper function used to test call() method. """
         self.assertEqual(result, RESPONSE)
-        expected_args = {
-            "url": URL,
-            "headers": HEADERS,
-            "data": DATA
-        }
+        if not expected_args:
+            expected_args = {
+                "url": URL,
+                "headers": HEADERS,
+                "data": DATA
+            }
         actual_args = mocked.call_args_list[0][1]
         actual_args["url"] = URL
         self.assertEqual(expected_args, actual_args)
@@ -70,7 +76,12 @@ class TestMerakiApi(unittest.TestCase):
         Should call the appropiate requests function of raise an Exception.
         """
         result = self.lazy_request.get().call().json()
-        self.check_test_call(result, mocked)
+        expected_args = {
+            "url": URL,
+            "headers": HEADERS,
+            "params": DATA
+        }
+        self.check_test_call(result, mocked, expected_args)
 
     @mock.patch(
         "requests.post"

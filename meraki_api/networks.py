@@ -12,6 +12,7 @@ from .sm import SM
 from .static_routes import StaticRoutes
 from .vlans import VLANs
 from .utils import clean
+from .clients import Clients
 
 
 class Networks(MerakiAPIResource):
@@ -26,6 +27,8 @@ class Networks(MerakiAPIResource):
     air_marshal_parameters = ["timespan"]
 
     bind_parameters = ["configurationTemplateId", "autoBind"]
+
+    clients_parameters = ["id_or_mac_or_ip"]
 
     def __init__(self, key, prefix=None, resource_id=None):
         MerakiAPIResource.__init__(self, key, prefix, resource_id)
@@ -112,3 +115,8 @@ class Networks(MerakiAPIResource):
         """ List all the available phone numbers in a network. """
         self.check_for_resource_id()
         return self.get("/phoneNumbers/available")
+
+    def clients(self, clients_id=None):
+        """ Returns the Clients API Resource. """
+        self.check_for_resource_id()
+        return Clients(self.key, self.endpoint(), clients_id)
