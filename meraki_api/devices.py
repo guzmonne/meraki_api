@@ -44,6 +44,13 @@ class Devices(MerakiAPIResource):
             raise ValueError("Cant't call this endpoint if the serial is not\
 defined")
         return self.get("/uplink")
+    
+    def lossAndLatencyHistory(self, query):
+        "Get the uplink loss percentage and latency in milliseconds for a wired network device."
+        if query is None:
+            raise ValueError("You must set the timespan query value.")
+        query = clean(query, self.clients_parameters)
+        return self.get("/lossAndLatencyHistory?" + urllib.parse.urlencode(query) + "&ip=8.8.8.8&uplink=wan1")    
 
     def claim(self, query):
         """ Claim a device. """
