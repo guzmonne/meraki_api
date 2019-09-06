@@ -15,6 +15,8 @@ class Devices(MerakiAPIResource):
     parameters = ["name", "tags", "lat", "lng", "address", "moveMapMarker"]
 
     clients_parameters = ["timespan"]
+    
+    loss_latency_parameters = ["timespan", "ip", "uplink"]
 
     claim_parameters = ["serial"]
 
@@ -49,8 +51,8 @@ defined")
         "Get the uplink loss percentage and latency in milliseconds for a wired network device."
         if query is None:
             raise ValueError("You must set the timespan query value.")
-        query = clean(query, self.clients_parameters)
-        return self.get("/lossAndLatencyHistory?" + urllib.parse.urlencode(query) + "&ip=8.8.8.8&uplink=wan1")    
+        query = clean(query, self.loss_latency_parameters)
+        return self.get("/lossAndLatencyHistory?" + urllib.parse.urlencode(query))    
 
     def claim(self, query):
         """ Claim a device. """
