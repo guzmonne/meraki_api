@@ -29,6 +29,8 @@ class Networks(MerakiAPIResource):
     bind_parameters = ["configurationTemplateId", "autoBind"]
 
     clients_parameters = ["id_or_mac_or_ip"]
+    
+    events_parameters = ["productType", "includedEventTypes", "excludedEventTypes", "deviceMac", "deviceSerial", "deviceName", "clientIp", "clientMac", "clientName", "smDeviceMac", "smDeviceName", "perPage", "startingAfter", "endingBefore"]    
 
     def __init__(self, key, prefix=None, resource_id=None):
         MerakiAPIResource.__init__(self, key, prefix, resource_id)
@@ -120,3 +122,9 @@ class Networks(MerakiAPIResource):
         """ Returns the Clients API Resource. """
         self.check_for_resource_id()
         return Clients(self.key, self.endpoint(), clients_id)
+
+    def events(self, query):
+        """ Returns the Clients API Resource. """
+        self.check_for_resource_id()
+        query = clean(query, self.events_parameters)
+        return self.get("/events?" + urllib.parse.urlencode(query))
