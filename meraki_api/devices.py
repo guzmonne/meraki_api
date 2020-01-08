@@ -2,6 +2,7 @@
 Meraki Devices API Resource
 """
 
+import urllib
 from .meraki_api_resource import MerakiAPIResource
 from .switch_ports import SwitchPorts
 from .utils import clean
@@ -14,6 +15,8 @@ class Devices(MerakiAPIResource):
     parameters = ["name", "tags", "lat", "lng", "address", "moveMapMarker"]
 
     clients_parameters = ["timespan"]
+    
+    loss_latency_parameters = ["timespan", "ip", "uplink"]
 
     claim_parameters = ["serial"]
 
@@ -35,7 +38,7 @@ class Devices(MerakiAPIResource):
         if query is None:
             raise ValueError("You must set the timespan query value.")
         query = clean(query, self.clients_parameters)
-        return self.get("/clients", query)
+        return self.get("/clients?" + urllib.parse.urlencode(query))
 
     def uplink(self):
         """ Return uplink status. """
@@ -43,6 +46,13 @@ class Devices(MerakiAPIResource):
             raise ValueError("Cant't call this endpoint if the serial is not\
 defined")
         return self.get("/uplink")
+    
+    def lossAndLatencyHistory(self, query):
+        "Get the uplink loss percentage and latency in milliseconds for a wired network device."
+        if query is None:
+            raise ValueError("You must set the timespan query value.")
+        query = clean(query, self.loss_latency_parameters)
+        return self.get("/lossAndLatencyHistory?" + urllib.parse.urlencode(query))    
 
     def claim(self, query):
         """ Claim a device. """

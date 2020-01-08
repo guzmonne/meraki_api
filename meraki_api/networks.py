@@ -2,6 +2,7 @@
 Meraki Networks API Resource
 """
 
+import urllib
 from .meraki_api_resource import MerakiAPIResource
 from .devices import Devices
 from .ssids import SSIDs
@@ -10,8 +11,8 @@ from .phone_contacts import PhoneContacts
 from .sm import SM
 from .static_routes import StaticRoutes
 from .vlans import VLANs
-from .l3_firewall_rules import L3FirewallRules
 from .utils import clean
+from .clients import Clients
 
 
 class Networks(MerakiAPIResource):
@@ -26,6 +27,10 @@ class Networks(MerakiAPIResource):
     air_marshal_parameters = ["timespan"]
 
     bind_parameters = ["configurationTemplateId", "autoBind"]
+
+    clients_parameters = ["id_or_mac_or_ip"]
+    
+    events_parameters = ["productType", "includedEventTypes", "excludedEventTypes", "deviceMac", "deviceSerial", "deviceName", "clientIp", "clientMac", "clientName", "smDeviceMac", "smDeviceName", "perPage", "startingAfter", "endingBefore"]    
 
     def __init__(self, key, prefix=None, resource_id=None):
         MerakiAPIResource.__init__(self, key, prefix, resource_id)
@@ -73,7 +78,7 @@ class Networks(MerakiAPIResource):
         self.check_for_resource_id()
         self.check_timespan(query)
         query = clean(query, self.traffic_parameters)
-        return self.get("/traffic", query)
+        return self.get("/traffic?" + urllib.parse.urlencode(query))
 
     def bind(self, data):
         """ Binds template to network. """
@@ -96,7 +101,7 @@ class Networks(MerakiAPIResource):
         self.check_timespan(query)
         self.check_for_resource_id()
         query = clean(query, self.air_marshal_parameters)
-        return self.get("/airMarshal", query)
+        return self.get("/airMarshal?" + urllib.parse.urlencode(query))
 
     def phone_contacts(self, phone_contact_id=None):
         """ List the phone contacts in a network. """
@@ -113,8 +118,13 @@ class Networks(MerakiAPIResource):
         self.check_for_resource_id()
         return self.get("/phoneNumbers/available")
 
-    def l3_firewall_rules(self, l3_firewall_rule_id=None):
-        """ List the L3 firewall rules for an MX network. """
+    def clients(self, clients_id=None):
+        """ Returns the Clients API Resource. """
         self.check_for_resource_id()
-        return L3FirewallRules(self.key, self.endpoint(), l3_firewall_rule_id)
+        return Clients(self.key, self.endpoint(), clients_id)
 
+    def events(self, query):
+        """ Returns the Clients API Resource. """
+        self.check_for_resource_id()
+        query = clean(query, self.events_parameters)
+        return self.get("/events?" + urllib.parse.urlencode(query))
